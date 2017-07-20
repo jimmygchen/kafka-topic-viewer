@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Header} from './header';
-import {Title} from './title';
-import {Techs} from './techs/techs';
-import {Footer} from './footer';
+import {Messages} from './messages/messages';
+import config from './config';
 
 const styles = {
   container: {
@@ -21,12 +19,9 @@ export class Main extends Component {
   render() {
     return (
       <div style={styles.container}>
-        <Header/>
         <main style={styles.main}>
-          <Title/>
-          <Techs/>
+          <Messages title={config.topicName} wsUrl={`${config.kafkaProxyWS}/?topic=${config.topicName}&consumerGroup=${config.consumerGroup}`}/>
         </main>
-        <Footer/>
       </div>
     );
   }
