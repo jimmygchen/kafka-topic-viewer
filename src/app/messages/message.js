@@ -3,8 +3,8 @@ import ReactJson from 'react-json-view';
 
 const styles = {
   json: {
-    height: '15rem',
-    width: '15rem',
+    height: '20rem',
+    width: '20rem',
     border: '1px solid lightgray',
     borderRadius: '1rem',
     margin: '1rem',
@@ -14,9 +14,14 @@ const styles = {
 };
 
 export class Message extends Component {
+
+  handleClick() {
+    this.props.onClick(this.props.json)
+  }
+
   render() {
     return (
-      <div style={styles.json}>
+      <div style={styles.json} onClick={this.handleClick.bind(this)}>
         <ReactJson src={this.props.json} displayDataTypes={false}/>
       </div>
     );
@@ -24,5 +29,6 @@ export class Message extends Component {
 }
 
 Message.propTypes = {
-  json: React.PropTypes.object.isRequired
+  json: React.PropTypes.object.isRequired,
+  handleClick: React.PropTypes.func
 };
