@@ -4,6 +4,7 @@ import Websocket from 'react-websocket';
 import {Message} from './message';
 import {MessageDialog} from './messageDialog';
 
+import { CSSTransitionGroup } from 'react-transition-group';
 import {GridList, GridTile} from 'material-ui/GridList';
 
 const styles = {
@@ -39,11 +40,12 @@ export class Messages extends Component {
 
   handleData(data) {
     let result = JSON.parse(data);
-    if(Array.isArray(result)) {
+    if (Array.isArray(result)) {
       result.reverse();
-      result.forEach((message)=> this.state.messages.unshift(message))
+      result.forEach((message) => this.state.messages.unshift(message))
     }
-    this.setState({messages: this.state.messages});
+
+    this.setState({messages: this.state.messages.slice(0, this.props.limit)});
   }
 
   openDialog(message) {
@@ -59,12 +61,19 @@ export class Messages extends Component {
 
         <div style={styles.root}>
           <GridList style={styles.gridList} cols={1} cellHeight="auto">
-            {this.state.messages.map((message, i) => (
-              <GridTile key={i}>
-                <div style={styles.messages}>
-                <Message json={message} onClick={this.openDialog.bind(this)}/>
-                </div>
-              </GridTile>
+            {this.state.messages.map((message) => (
+              <CSSTransitionGroup key={message.offset}
+                transitionName="message"
+                transitionAppear={true}
+                transitionAppearTimeout={300}
+                transitionEnter={false}
+                transitionLeave={false}>
+                <GridTile>
+                  <div style={styles.messages}>
+                    <Message json={message} onClick={this.openDialog.bind(this)}/>
+                  </div>
+                </GridTile>
+              </CSSTransitionGroup>
             ))}
           </GridList>
         </div>
@@ -80,6 +89,6 @@ export class Messages extends Component {
 
 Messages.propTypes = {
   wsUrl: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired
+  title: React.PropTypes.string.isRequired,
+  limit: React.PropTypes.number
 };
-

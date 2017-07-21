@@ -10,6 +10,7 @@
     "react-json-view": "^1.10.9",
     "react-router": "^2.4.0",
     "react-tap-event-plugin": "^2.0.1",
+    "react-transition-group": "^1.2.0",
     "react-websocket": "^1.1.7"
   },
   "devDependencies": {
@@ -61,8 +62,8 @@
   },
   "scripts": {
     "build": "gulp",
-    "serve": "gulp serve",
-    "serve:dist": "gulp serve:dist",
+    "serve": "node ./server/index.js & gulp serve",
+    "serve:dist": "node ./server/index.js & gulp serve:dist",
     "test": "gulp test",
     "test:auto": "gulp test:auto",
     "kafka-proxy": "node ./server/index.js"

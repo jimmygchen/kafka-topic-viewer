@@ -1,5 +1,6 @@
 export default {
   kafkaProxyWS: 'ws://127.0.0.1:9999',
-  consumerGroup: 'topic-monitor-ui',
-  topics: ['test']
+  consumerGroup: 'topic-monitor-ui-3',
+  topics: ['Sport-News', 'Finance-News'],
+  messageLimit: 30
 };
