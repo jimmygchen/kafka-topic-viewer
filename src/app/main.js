@@ -39,8 +39,9 @@ export class Main extends Component {
           <main style={styles.main}>
             {/*<AddTopicForm onSubmit={this.addTopic.bind(this)}/>*/}
             {config.topics.map((topicName) => (
-              <Messages title={topicName} key={topicName}
-                        wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${config.consumerGroup}`}/>
+              <Messages title={topicName} key={topicName} limit={config.messageLimit}
+                        // FIXME: remove offset - testing purpose only
+                        wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${config.consumerGroup}&offset=1`}/>
             ))}
           </main>
         </div>
