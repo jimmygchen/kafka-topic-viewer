@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import {Header} from './header';
 import {Messages} from './messages/messages';
 import config from './config';
 
@@ -10,12 +11,15 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100%',
-    margin: '0 1rem'
   },
   main: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    margin: '0 1rem'
+  },
+  topic: {
+    marginBottom: '2rem'
   }
 };
 
@@ -29,12 +33,14 @@ export class Main extends Component {
     return (
       <MuiThemeProvider>
         <div style={styles.container}>
-          <h1 style={styles.h1}>Kafka Topic Viewer</h1>
+          <Header/>
           <main style={styles.main}>
             {config.topics.map((topicName) => (
-              <Messages title={topicName} key={topicName} limit={config.messageLimit}
-                        // FIXME: remove offset - testing purpose only
-                        wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${config.consumerGroup}&offset=1`}/>
+              <div style={styles.topic} key={topicName}>
+                <Messages title={topicName} limit={config.messageLimit}
+                  // FIXME: remove offset - testing purpose only
+                          wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${config.consumerGroup}&offset=1`}/>
+              </div>
             ))}
           </main>
         </div>

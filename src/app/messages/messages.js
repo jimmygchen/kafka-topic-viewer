@@ -17,7 +17,7 @@ const styles = {
     fontSize: '1.5rem'
   },
 
-  messages: {
+  message: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -81,9 +81,10 @@ export class Messages extends Component {
                 <GridTile
                   title={message.content.offset} style={styles.gridTile}
                   subtitle={<span><b>{message.moment.fromNow()}</b></span>}
-                  actionIcon={<IconButton><ActionPageview color="black"/></IconButton>}
-                  onClick={this.openDialog.bind(this, message.content)}>
-                  <div style={styles.messages}>
+                  actionIcon={<IconButton><ActionPageview color="white"/></IconButton>}
+                  onClick={this.openDialog.bind(this, message.content)}
+                  titleBackground="linear-gradient(to top, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                  <div style={styles.message}>
                     <Message content={message.content}/>
                   </div>
                 </GridTile>
