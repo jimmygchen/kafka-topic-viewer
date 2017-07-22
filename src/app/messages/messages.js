@@ -38,6 +38,9 @@ const styles = {
     border: '1px solid lightgray',
     borderRadius: '1rem',
     marginRight: '0.5rem'
+  },
+  messageCount: {
+    color: '#26C6DA'
   }
 };
 
@@ -66,7 +69,7 @@ export class Messages extends Component {
     return (
       <div>
         <h2 style={styles.h2}>
-          Topic: {this.props.title} ({this.state.messages.length})
+          {this.props.title} (<span style={styles.messageCount}>{this.state.messages.length}</span>)
         </h2>
 
         <div style={styles.root}>
