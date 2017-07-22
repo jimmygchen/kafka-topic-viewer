@@ -1,4 +1,4 @@
-export default (kafkaProxy) => {
+module.exports = (kafkaProxy) => {
   Object.getPrototypeOf(kafkaProxy)._batchMessageHandler = function(messageSet, topicCombo, partition) {
     // workaround... nokafka onyl allows three params to be sent to message handlers, so we just concat and then unpack
     let consumerGroup = topicCombo.split('/')[0];

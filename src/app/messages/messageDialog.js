@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ReactJson from 'react-json-view';
@@ -54,5 +55,5 @@ export class MessageDialog extends React.Component {
 }
 
 MessageDialog.propTypes = {
-  content: React.PropTypes.object
+  content: PropTypes.object
 };

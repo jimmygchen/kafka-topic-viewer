@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactJson from 'react-json-view';
 
 const styles = {
@@ -29,6 +30,6 @@ export class Message extends Component {
 }
 
 Message.propTypes = {
-  json: React.PropTypes.object.isRequired,
-  handleClick: React.PropTypes.func
+  json: PropTypes.object.isRequired,
+  handleClick: PropTypes.func
 };

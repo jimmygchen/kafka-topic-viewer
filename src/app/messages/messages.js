@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Websocket from 'react-websocket';
 
 import {Message} from './message';
@@ -41,7 +42,6 @@ export class Messages extends Component {
   handleData(data) {
     let result = JSON.parse(data);
     if (Array.isArray(result)) {
-      result.reverse();
       result.forEach((message) => this.state.messages.unshift(message))
     }
 
@@ -88,7 +88,7 @@ export class Messages extends Component {
 }
 
 Messages.propTypes = {
-  wsUrl: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  limit: React.PropTypes.number
+  wsUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  limit: PropTypes.number
 };
