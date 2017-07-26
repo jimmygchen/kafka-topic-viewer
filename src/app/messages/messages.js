@@ -81,7 +81,7 @@ export class Messages extends Component {
                                   transitionAppearTimeout={300}
                                   transitionEnter={false}
                                   transitionLeave={false}>
-                <GridTile
+                <GridTile className="message-tile"
                   title={message.content.offset} style={styles.gridTile}
                   subtitle={<span><b>{message.moment.fromNow()}</b></span>}
                   actionIcon={<IconButton><ActionPageview color="white"/></IconButton>}
