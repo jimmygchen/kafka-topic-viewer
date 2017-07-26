@@ -19,6 +19,7 @@ export class MessageDialog extends React.Component {
 
   handleClose() {
     this.setState({content: null, open: false});
+    this.props.onClose && this.props.onClose();
   }
 
   componentWillReceiveProps(props) {
@@ -55,5 +56,6 @@ export class MessageDialog extends React.Component {
 }
 
 MessageDialog.propTypes = {
-  content: PropTypes.object
+  content: PropTypes.object,
+  onClose: PropTypes.func
 };

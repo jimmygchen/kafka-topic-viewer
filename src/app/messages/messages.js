@@ -14,7 +14,7 @@ import {MessageCountBadge} from "./messageCountBadge";
 export class Messages extends Component {
   constructor() {
     super();
-    this.state = {messages: [], messageCount: 0};
+    this.state = {messages: [], messageCount: 0, selected: null};
   }
 
   handleData(data) {
@@ -31,6 +31,10 @@ export class Messages extends Component {
 
   openDialog(message) {
     this.setState({selected: message})
+  }
+
+  onDialogClose() {
+    this.setState({selected: null});
   }
 
   render() {
@@ -68,7 +72,7 @@ export class Messages extends Component {
                         <span>{JSON.stringify(message.content.message)}</span>
                       </p>
                     }
-                    secondaryTextLines={3}
+                    secondaryTextLines={2}
                     onClick={this.openDialog.bind(this, message.content)}
                   />
                 </CSSTransitionGroup>
@@ -78,7 +82,7 @@ export class Messages extends Component {
         </List>
         </Paper>
 
-        <MessageDialog content={this.state.selected}/>
+        <MessageDialog content={this.state.selected} onClose={this.onDialogClose.bind(this)}/>
 
         <Websocket url={this.props.wsUrl}
                    onMessage={this.handleData.bind(this)}/>
