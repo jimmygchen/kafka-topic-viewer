@@ -9,15 +9,18 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100%',
+    backgroundColor: '#fafafa'
   },
   main: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    margin: '0 1rem'
+    flexDirection: 'row',
+    margin: '1rem'
   },
   topic: {
-    marginBottom: '2rem'
+    flex: 1,
+    flexBasis: 0,
+    marginRight: '1rem'
   }
 };
 

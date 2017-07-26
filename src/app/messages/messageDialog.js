@@ -47,7 +47,7 @@ export class MessageDialog extends React.Component {
           contentStyle={customContentStyle}
           autoScrollBodyContent={true}
         >
-          <ReactJson src={this.props.content} displayDataTypes={false}/>
+          <ReactJson name={false} src={this.props.content} displayDataTypes={false}/>
         </Dialog>
       </div>
     );

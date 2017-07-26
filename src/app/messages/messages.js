@@ -1,64 +1,32 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Websocket from 'react-websocket';
-import moment from 'moment';
-
-import {Message} from './message';
-import {MessageDialog} from './messageDialog';
-
-import {CSSTransitionGroup} from 'react-transition-group';
-import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import ActionPageview from 'material-ui/svg-icons/action/pageview';
-
-const styles = {
-  h2: {
-    fontWeight: 300,
-    fontSize: '1.5rem'
-  },
-
-  message: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around'
-  },
-
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-  },
-  gridTile: {
-    border: '1px solid lightgray',
-    borderRadius: '1rem',
-    marginRight: '0.5rem'
-  },
-  messageCount: {
-    color: '#26C6DA'
-  }
-};
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import Websocket from "react-websocket";
+import moment from "moment";
+import {MessageDialog} from "./messageDialog";
+import {CSSTransitionGroup} from "react-transition-group";
+import {List, ListItem} from "material-ui/List";
+import Divider from "material-ui/Divider";
+import Subheader from "material-ui/Subheader";
+import {darkBlack} from "material-ui/styles/colors";
+import Paper from "material-ui/Paper";
+import {MessageCountBadge} from "./messageCountBadge";
 
 export class Messages extends Component {
   constructor() {
     super();
-    this.state = {messages: []};
+    this.state = {messages: [], messageCount: 0};
   }
 
   handleData(data) {
     let result = JSON.parse(data);
     if (Array.isArray(result)) {
       result.forEach((message) => {
-        this.state.messages.unshift({content: message, moment: moment()})
+        this.state.messages.unshift({content: message, moment: moment()});
+        this.state.messageCount++;
       })
     }
 
-    this.setState({messages: this.state.messages.slice(0, this.props.limit)});
+    this.setState({messages: this.state.messages.slice(0, this.props.limit), messageCount: this.state.messageCount});
   }
 
   openDialog(message) {
@@ -68,33 +36,47 @@ export class Messages extends Component {
   render() {
     return (
       <div>
-        <h2 style={styles.h2}>
-          {this.props.title} (<span style={styles.messageCount}>{this.state.messages.length}</span>)
-        </h2>
+        <Paper zDepth={2}>
+        <List>
+          <Subheader>
+            <MessageCountBadge messageCount={this.state.messageCount}>
+              <span>{this.props.title}</span>
+            </MessageCountBadge>
+          </Subheader>
 
-        <div style={styles.root}>
-          <GridList style={styles.gridList} cols={1} cellHeight="auto">
-            {this.state.messages.map((message) => (
-              <CSSTransitionGroup key={message.content.offset}
-                                  transitionName="message"
-                                  transitionAppear={true}
-                                  transitionAppearTimeout={300}
-                                  transitionEnter={false}
-                                  transitionLeave={false}>
-                <GridTile className="message-tile"
-                  title={message.content.offset} style={styles.gridTile}
-                  subtitle={<span><b>{message.moment.fromNow()}</b></span>}
-                  actionIcon={<IconButton><ActionPageview color="white"/></IconButton>}
-                  onClick={this.openDialog.bind(this, message.content)}
-                  titleBackground="linear-gradient(to top, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                  <div style={styles.message}>
-                    <Message content={message.content}/>
-                  </div>
-                </GridTile>
-              </CSSTransitionGroup>
-            ))}
-          </GridList>
-        </div>
+          {this.state.messages.length === 0 && (
+            <ListItem
+              primaryText={'No new message.'}
+            />
+          )}
+
+          {this.state.messages.map((message, index) => {
+            let divider = index > 0 && <Divider inset={false} />;
+            return (
+                <CSSTransitionGroup key={message.content.offset}
+                                    transitionName="message"
+                                    transitionAppear={true}
+                                    transitionAppearTimeout={300}
+                                    transitionEnter={false}
+                                    transitionLeave={false}>
+                  {divider}
+                  <ListItem
+                    primaryText={message.content.offset}
+                    secondaryText={
+                      <p>
+                        <span style={{color: darkBlack}}>{message.moment.fromNow()} - </span>
+                        <span>{JSON.stringify(message.content.message)}</span>
+                      </p>
+                    }
+                    secondaryTextLines={3}
+                    onClick={this.openDialog.bind(this, message.content)}
+                  />
+                </CSSTransitionGroup>
+              )
+            }
+          )}
+        </List>
+        </Paper>
 
         <MessageDialog content={this.state.selected}/>
 
@@ -110,3 +92,4 @@ Messages.propTypes = {
   title: PropTypes.string.isRequired,
   limit: PropTypes.number
 };
+
