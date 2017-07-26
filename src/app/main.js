@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import {Header} from './header';
-import {Messages} from './messages/messages';
-import config from './config';
+import React, {Component} from "react";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {Header} from "./header";
+import {Messages} from "./messages/messages";
+import config from "./config";
 
 const styles = {
   container: {
@@ -23,10 +21,13 @@ const styles = {
   }
 };
 
+const LOCAL_STORAGE_KEY = 'kafkaTopicViewerConsumerId';
+
 export class Main extends Component {
   constructor() {
     super();
-    this.state = {topics: []}
+    this.state = {topics: []};
+    this.consumerGroup = localStorage.getItem(LOCAL_STORAGE_KEY) || createNewConsumerGroup();
   }
 
   render() {
@@ -38,8 +39,7 @@ export class Main extends Component {
             {config.topics.map((topicName) => (
               <div style={styles.topic} key={topicName}>
                 <Messages title={topicName} limit={config.messageLimit}
-                  // FIXME: remove offset - testing purpose only
-                          wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${config.consumerGroup}&offset=1`}/>
+                          wsUrl={`${config.kafkaProxyWS}/?topic=${topicName}&consumerGroup=${this.consumerGroup}`}/>
               </div>
             ))}
           </main>
@@ -47,4 +47,14 @@ export class Main extends Component {
       </MuiThemeProvider>
     );
   }
+}
+
+function createNewConsumerGroup() {
+  let consumerGroup = config.consumerGroupPrefix + generateId();
+  localStorage.setItem(LOCAL_STORAGE_KEY, consumerGroup);
+  return consumerGroup;
+}
+
+function generateId() {
+  return Math.random().toString(16).substring(2, 8);
 }
