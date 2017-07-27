@@ -30,19 +30,30 @@ const styles = {
   }
 };
 
-const LOCAL_STORAGE_KEY = 'kafkaTopicViewerConsumerId';
+const STORAGE_KEY_CONSUMER_ID = 'kafkaTopicViewerConsumerId';
+const STORAGE_KEY_MONITORING_TOPICS = 'kafkaTopicViewerMonitoringTopics';
 
 export class Main extends Component {
   constructor() {
     super();
+
+    let storageMonitoringTopics = localStorage.getItem(STORAGE_KEY_MONITORING_TOPICS);
+    storageMonitoringTopics = storageMonitoringTopics && JSON.parse(storageMonitoringTopics);
+
     let topics = config.topics.map((topicName, index) => {
-      // monitor first n topics by configuration
-      let monitoring = index < config.defaultNumOfTopics;
+      // check if monitoring topics exists in storage, otherwise toggle the first n topics.
+      let monitoring = Array.isArray(storageMonitoringTopics) ?
+        storageMonitoringTopics.indexOf(topicName) > -1 : index < config.defaultNumOfTopics;
       return {topicName, monitoring};
     });
 
-    this.consumerGroup = localStorage.getItem(LOCAL_STORAGE_KEY) || createNewConsumerGroup();
+    this.consumerGroup = localStorage.getItem(STORAGE_KEY_CONSUMER_ID) || createNewConsumerGroup();
     this.state = {open: false, topics};
+
+    window.addEventListener('unload', () => {
+      let monitoringTopics = this.state.topics.filter(topic => topic.monitoring).map(topic => topic.topicName);
+      localStorage.setItem(STORAGE_KEY_MONITORING_TOPICS, JSON.stringify(monitoringTopics));
+    })
   }
 
   toggleDrawer() {
@@ -88,7 +99,7 @@ export class Main extends Component {
 
 function createNewConsumerGroup() {
   let consumerGroup = config.consumerGroupPrefix + generateId();
-  localStorage.setItem(LOCAL_STORAGE_KEY, consumerGroup);
+  localStorage.setItem(STORAGE_KEY_CONSUMER_ID, consumerGroup);
   return consumerGroup;
 }
 
