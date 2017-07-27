@@ -13,7 +13,8 @@ const styles = {
   messageCount: {
     display: 'flex',
     flexFlow: 'row wrap',
-    placeContent: 'center',
+    alignContent : 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     fontWeight: '500',
     fontSize: '12px',

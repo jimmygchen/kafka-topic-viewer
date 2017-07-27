@@ -25,8 +25,7 @@ const styles = {
     margin: '1rem'
   },
   topic: {
-    flex: 1,
-    flexBasis: 0,
+    flex: '0 1 400px',
     marginRight: '1rem'
   }
 };

@@ -5,5 +5,5 @@ export default {
   topics: ['Sport-News', 'Finance-News', 'International News', 'Technology News', 'Other News'],
   defaultNumOfTopics: 3,
 
-  messageLimit: 30
+  messageLimit: 15
 };

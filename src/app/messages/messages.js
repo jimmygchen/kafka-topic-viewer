@@ -68,8 +68,8 @@ export class Messages extends Component {
                     primaryText={message.content.offset}
                     secondaryText={
                       <p>
-                        <span style={{color: darkBlack}}>{message.moment.fromNow()} - </span>
-                        <span>{JSON.stringify(message.content.message)}</span>
+                        <span style={{color: darkBlack}}>{message.content.message}</span>
+                        <br/><span>{message.moment.fromNow()}</span>
                       </p>
                     }
                     secondaryTextLines={2}
