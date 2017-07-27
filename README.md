@@ -4,7 +4,7 @@ A simple web-based viewer to monitor messages on topic(s) in Kafka.
 
 Connects to Kafka via a WebSockets based proxy (using [kafka-proxy-ws](https://github.com/Microsoft/kafka-proxy-ws)).
 
-![Screenshot](https://github.com/jchen86/kafka-topic-viewer/blob/master/screenshot.png?raw=true)
+![Screenshots](https://github.com/jchen86/kafka-topic-viewer/blob/master/screenshots.gif?raw=true)
 
 ## Getting Started
 1. Configure the topic names to monitor in `src/app/config.js`
