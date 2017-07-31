@@ -28,3 +28,7 @@ let kafkaProxy = new KafkaProxy({
 $ npm install
 $ npm run serve
 ```
+
+## License
+
+The project is licensed under the MIT license.
