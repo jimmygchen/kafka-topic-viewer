@@ -1,5 +1,10 @@
 FROM node:boron
 
+ENV KAFKA_URL=127.0.0.1:9092
+ENV SERVER_PORT=8080
+ENV WEBSOCKET_PORT=9999
+ENV SERVE_STATIC=true
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -10,9 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 9999
-EXPOSE 3000
+EXPOSE ${SERVER_PORT}
+EXPOSE ${WEBSOCKET_PORT}
 
-CMD [ "npm", "run", "serve:dist" ]
-
-
+CMD [ "node", "./server/index.js" ]

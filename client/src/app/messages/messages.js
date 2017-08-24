@@ -11,6 +11,8 @@ import {darkBlack} from "material-ui/styles/colors";
 import Paper from "material-ui/Paper";
 import {MessageCountBadge} from "./messageCountBadge";
 
+import {Buffer} from 'buffer';
+
 export class Messages extends Component {
   constructor() {
     super();
@@ -21,6 +23,8 @@ export class Messages extends Component {
     let result = JSON.parse(data);
     if (Array.isArray(result)) {
       result.forEach((message) => {
+        let buffer = objectToBuffer(message.message);
+        message.message = buffer.toString();
         this.state.messages.unshift({content: message, moment: moment()});
         this.state.messageCount++;
       })
@@ -96,4 +100,9 @@ Messages.propTypes = {
   title: PropTypes.string.isRequired,
   limit: PropTypes.number
 };
+
+function objectToBuffer(object) {
+    return object && object.type === 'Buffer' ?
+        Buffer.from(object.data) : object;
+}
 

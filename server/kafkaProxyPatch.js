@@ -12,7 +12,8 @@ module.exports = (kafkaProxy) => {
       this.clients[consumerGroup][topic].ws.send(JSON.stringify(
         messageSet.map((message) => {
           return {
-            message: message.message.value && message.message.value.toString(),
+            // PATCH: send array buffer without converting with toString - deserialization is done on the client
+            message: message.message.value,
             offset: message.offset
           }
         })
