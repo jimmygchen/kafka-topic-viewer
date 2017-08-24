@@ -31,10 +31,10 @@ function startKafkaWebSocketProxy() {
 function startExpressServer() {
     let app = express();
 
-    let topics = process.env.KAFKA_TOPICS || '';
-    topics = topics.split(',');
+    let topics = process.env.KAFKA_TOPICS;
+    topics = topics && topics.split(',');
 
-    app.get('/clientConfig', function (req, res) {
+    app.get('/clientConfig.json', function (req, res) {
         res.json({wsPort, topics});
     });
 

@@ -13,9 +13,19 @@ import './index.less';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={Main}/>
-  </Router>,
-  document.getElementById('root')
-);
+fetch('clientConfig.json')
+    .then(clientConfig => clientConfig.json())
+    .catch(() => {
+        console.error('clientConfig.json not found on server.');
+    })
+    .then((clientConfig) => {
+        console.log(`ktvClientConfig ${JSON.stringify(clientConfig)}`);
+        window.ktvClientConfig = clientConfig;
+
+        ReactDOM.render(
+            <Router history={browserHistory}>
+                <Route path="/" component={Main}/>
+            </Router>,
+            document.getElementById('root')
+        );
+    });

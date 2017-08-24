@@ -87,7 +87,7 @@ export class Main extends Component {
               .map((topic) => (
                 <div style={styles.topic} key={topic.topicName}>
                   <Messages title={topic.topicName} limit={config.messageLimit}
-                            wsUrl={`${config.kafkaProxyWS}/?topic=${topic.topicName}&consumerGroup=${this.consumerGroup}`}/>
+                            wsUrl={`${config.getKafkaProxyURL()}/?topic=${topic.topicName}&consumerGroup=${this.consumerGroup}`}/>
                 </div>
               ))}
           </main>
